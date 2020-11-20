@@ -47,6 +47,7 @@ import com.kunfei.bookshelf.help.permission.Permissions;
 import com.kunfei.bookshelf.help.permission.PermissionsCompat;
 import com.kunfei.bookshelf.help.storage.BackupRestoreUi;
 import com.kunfei.bookshelf.model.UpLastChapterModel;
+import com.kunfei.bookshelf.presenter.BookSourcePresenter;
 import com.kunfei.bookshelf.presenter.MainPresenter;
 import com.kunfei.bookshelf.presenter.contract.MainContract;
 import com.kunfei.bookshelf.service.WebService;
@@ -73,6 +74,7 @@ public class MainActivity extends BaseTabActivity<MainContract.Presenter> implem
         BookListFragment.CallbackValue {
     private final int requestSource = 14;
     private String[] mTitles;
+    private final int REQUEST_QR = 202;
 
     @BindView(R.id.drawer)
     DrawerLayout drawer;
@@ -125,7 +127,6 @@ public class MainActivity extends BaseTabActivity<MainContract.Presenter> implem
         super.onResume();
 
         String shared_url = preferences.getString("shared_url", "");
-        assert shared_url != null;
         if (shared_url.length() > 1) {
             InputDialog.builder(this)
                     .setTitle(getString(R.string.add_book_url))
@@ -445,6 +446,11 @@ public class MainActivity extends BaseTabActivity<MainContract.Presenter> implem
                             }
                         }).show();
                 break;
+            case R.id.action_add_qrcode:
+
+                Intent intent = new Intent(this, QRCodeScanActivity.class);
+                startActivityForResult(intent, REQUEST_QR);
+                break;
             case R.id.action_download_all:
                 if (!isNetWorkAvailable()) {
                     toast(R.string.network_connection_unavailable);
@@ -686,6 +692,22 @@ public class MainActivity extends BaseTabActivity<MainContract.Presenter> implem
                     FindBookFragment findBookFragment = getFindFragment();
                     if (findBookFragment != null) {
                         findBookFragment.refreshData();
+                    }
+                }
+                break;
+            case REQUEST_QR:
+                if (resultCode == RESULT_OK) {
+                    String result = data.getStringExtra("result");
+                    if (!StringUtils.isTrimEmpty(result)) {
+                        result=result.trim();
+                        // 如果只有书源,则导入书源
+                        if(result.replaceAll("(\\s|\n)*","").matches("^\\{.*$")) {
+                            new BookSourcePresenter().importBookSource(result);
+                            break;
+                        }
+//                        String[] string=result.split("#",2);
+//                        mPresenter.addBookUrl(string[0]);
+                        mPresenter.addBookUrl(result);
                     }
                 }
                 break;

@@ -51,7 +51,7 @@
     <string name="download_offline_t">离线下载</string>
     <string name="download_offline_s">下载选择的章节到本地</string>
     <string name="change_origin">换源</string>
-    <string name="about_description">\u3000\u3000这是一款开源的阅读软件，你可以fork我们的代码自己编译APK。欢迎提交代码帮助改善应用。\n\u3000\u3000公众号[开源阅读软件]！</string>
+    <string name="about_description">\u3000\u3000这是一款开源的阅读软件，你可以fork我们的代码自己编译APK。欢迎提交代码帮助改善应用。\n\u3000\u3000公众号[开源阅读]！</string>
     <string name="version_name">Version %s</string>
     <string name="pt_auto_refresh">自动刷新</string>
     <string name="ps_auto_refresh">打开软件时自动更新书籍</string>
@@ -315,7 +315,7 @@
     <string name="page_mode_SLIDE">滑动</string>
     <string name="page_mode_SCROLL">滚动</string>
     <string name="page_mode_NONE">无动画</string>
-    <string name="donate_s">此书源使用了高级功能，复制支付宝红包搜索码领取红包或关注微信公众号[开源阅读软件]开启。</string>
+    <string name="donate_s">此书源使用了高级功能，复制支付宝红包搜索码领取红包或关注微信公众号[开源阅读]开启。</string>
     <string name="up_change_source_last_chapter_t">后台更新换源最新章节</string>
     <string name="up_change_source_last_chapter_s">开启则会在软件打开1分钟后开始更新</string>
     <string name="behavior_main_t">书架ToolBar自动隐藏</string>
@@ -330,6 +330,7 @@
     <string name="book_source_login_url">登录URL(loginUrl)</string>
     <string name="rule_book_author">作者规则(ruleBookAuthor)</string>
     <string name="rule_book_content">正文规则(ruleBookContent)</string>
+    <string name="rule_book_content_replace">正文替换规则(ruleBookContentReplace)</string>
     <string name="rule_book_name">书名规则(ruleBookName)</string>
     <string name="rule_chapter_list">目录列表规则(ruleChapterList)</string>
     <string name="rule_chapter_name">章节名称规则(ruleChapterName)</string>
@@ -469,4 +470,18 @@
     <string name="custom_page_key">自定义翻页按键</string>
     <string name="prev_page_key">上一页按键</string>
     <string name="next_page_key">下一页按键</string>
+
+    <string name="search_result_filter_grade">搜索结果过滤等级</string>
+    <string name="search_result_filter_grade_tip">调高过滤等级可以避免看到书名/作者无关的搜索结果。
+        等级1-9：搜索关键字需要出现到书名/作者中，但是允许有8-0个字（空格不计）没有出现（避免误输入的影响）。默认等级0，不过滤。推荐等级7，允许2个错別字。
+        \n当前过滤等级 %s</string>
+    <string name="light_novel_paragraph">自动重分段落</string>
+    <string name="share_book">分享书籍</string>
+    <string name="add_qrcode">扫二维码</string>
+    <string name="copy_url">复制网址</string>
+    <string name="check_find_source">标记所选发现源</string>
+    <string name="replace_ad">广告话术</string>
+    <string name="replace_ad_title">编辑广告话术规则</string>
+    <string name="replace_add_ad_title">添加广告话术规则</string>
+    <string name="replace_ad_intro">广告话术功能使用了自动优化的算法，不需要使用正则表达式，只需要多次标记不想看的文字，就可以获得较好的广告替换效果。同一个网站的广告话术自动保存在一个规则内，避免了“替换净化”列表里有太多多的规则。</string>
 </resources>

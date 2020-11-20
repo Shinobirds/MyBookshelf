@@ -1775,13 +1775,13 @@ public abstract class PageLoader {
 
     /*****************************************interface*****************************************/
 
-    class ChapterContainer {
+    static class ChapterContainer {
         TxtChapter txtChapter;
     }
 
     /**
      * --------------------
-     * TODO 检测获取按压坐标所在位置的字符，没有的话返回null
+     * 检测获取按压坐标所在位置的字符，没有的话返回null
      * --------------------
      * author: huangwei
      * 2017年7月4日上午10:23:19

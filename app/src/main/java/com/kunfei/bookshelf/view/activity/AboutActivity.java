@@ -39,7 +39,7 @@ import io.reactivex.SingleOnSubscribe;
  * 关于
  */
 
-public class AboutActivity extends MBaseActivity {
+public class AboutActivity extends MBaseActivity<IPresenter> {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_version)
@@ -96,7 +96,7 @@ public class AboutActivity extends MBaseActivity {
     CardView vwShare;
 
     private MoDialogHUD moDialogHUD;
-    private String[] allQQ = new String[]{"(公众号)开源阅读软件", "(QQ群)701903217", "(QQ群)805192012", "(QQ群)773736122", "(QQ群)981838750"};
+    private String[] allQQ = new String[]{"(公众号)开源阅读", "(QQ群)701903217", "(QQ群)805192012", "(QQ群)773736122", "(QQ群)981838750"};
 
     public static void startThis(Context context) {
         Intent intent = new Intent(context, AboutActivity.class);

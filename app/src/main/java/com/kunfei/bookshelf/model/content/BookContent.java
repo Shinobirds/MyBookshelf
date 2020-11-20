@@ -111,6 +111,11 @@ class BookContent {
                     }
                 }
             }
+            String replaceRule = bookSourceBean.getRuleBookContentReplace();
+            if (replaceRule != null && replaceRule.trim().length() > 0) {
+                analyzer.setContent(bookContentBean.getDurChapterContent());
+                bookContentBean.setDurChapterContent(analyzer.getString(replaceRule));
+            }
             e.onNext(bookContentBean);
             e.onComplete();
         });
@@ -138,7 +143,7 @@ class BookContent {
         return webContentBean;
     }
 
-    private class WebContentBean {
+    private static class WebContentBean {
         private String content;
         private String nextUrl;
 

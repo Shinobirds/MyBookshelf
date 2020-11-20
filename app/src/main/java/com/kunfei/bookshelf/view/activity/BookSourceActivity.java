@@ -301,6 +301,9 @@ public class BookSourceActivity extends MBaseActivity<BookSourceContract.Present
             case R.id.action_check_book_source:
                 mPresenter.checkBookSource(adapter.getSelectDataList());
                 break;
+            case R.id.action_check_find_source:
+                mPresenter.checkFindSource(adapter.getSelectDataList());
+                break;
             case R.id.sort_manual:
                 upSourceSort(0);
                 break;
@@ -426,7 +429,8 @@ public class BookSourceActivity extends MBaseActivity<BookSourceContract.Present
     private void selectFileSys() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("text/*");//设置类型
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"text/*", "application/json"});
+        intent.setType("*/*");//设置类型
         startActivityForResult(intent, IMPORT_SOURCE);
     }
 
@@ -447,8 +451,22 @@ public class BookSourceActivity extends MBaseActivity<BookSourceContract.Present
                 case REQUEST_QR:
                     if (data != null) {
                         String result = data.getStringExtra("result");
+                        if (!StringUtils.isTrimEmpty(result)) {
+
+                        if(result.replaceAll("\\s","").matches("^\\{.*\\}$")) {
+                            mPresenter.importBookSource(result);
+                            break;
+                        }
+                            result=result.trim();
+                        String[] string=result.split("#",2);
+                        if(string.length==2){
+                            if(string[1].replaceAll("\\s","").matches("^\\{.*\\}$")) {
+                                mPresenter.importBookSource(string[1]);
+                                break;
+                            }
+                        }
                         mPresenter.importBookSource(result);
-                    }
+                    }}
                     break;
             }
         }
