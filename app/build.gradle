@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.greenrobot.greendao'
-apply plugin: 'com.google.firebase.crashlytics'
+//apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: "de.timfreiheit.resourceplaceholders"
 
 static def releaseTime() {
@@ -11,11 +11,11 @@ static def releaseTime() {
 
 def name = "YueDu"
 def version = "2." + releaseTime()
-def gitCommits = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
+def gitCommits = 1
 
 android {
     compileSdkVersion 29
-    buildToolsVersion '28.0.3'
+    buildToolsVersion '29.0.3'
     signingConfigs {
         myConfig {
             storeFile file(RELEASE_STORE_FILE)
@@ -73,7 +73,7 @@ resourcePlaceholders {
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
     testImplementation 'junit:junit:4.13'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':basemvplib')
@@ -87,12 +87,12 @@ dependencies {
     implementation "org.jetbrains.anko:anko-sdk27-listeners:$anko_version"
 
     //fireBase
-    implementation 'com.google.firebase:firebase-analytics:17.6.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    //implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    //implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
 
     //androidX
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.media:media:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -173,7 +173,7 @@ greendao {
     targetGenDir 'src/main/java'
 }
 
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'
 
 afterEvaluate {
     for (Task task : project.tasks.matching { it.name.startsWith('crashlyticsUploadDeobs') }) {

@@ -129,6 +129,8 @@ public abstract class PageLoader {
     // 当前章
     int mCurChapterPos;
     private int mCurPagePos;
+    private volatile boolean mIsPageSet;
+
     private int readTextLength; //已读字符数
     private boolean resetReadAloud; //是否重新朗读
     private int readAloudParagraph; //正在朗读章节
@@ -151,7 +153,13 @@ public abstract class PageLoader {
         }
         mContext = pageView.getContext();
         mCurChapterPos = book.getDurChapter();
-        mCurPagePos = book.getDurChapterPage();
+        if (book.isAudio()) {
+            mIsPageSet = true;
+            mCurPagePos = book.getDurChapterPage();
+        } else {
+            mIsPageSet = false;
+            mCurPagePos = 0;
+        }
         compositeDisposable = new CompositeDisposable();
         oneSpPx = ScreenUtils.spToPx(1);
         // 初始化数据
@@ -766,7 +774,12 @@ public abstract class PageLoader {
         }
         mPageView.setContentDescription(getContent());
         book.setDurChapter(mCurChapterPos);
-        book.setDurChapterPage(mCurPagePos);
+        if (book.isAudio()) {
+            book.setDurChapterPage(mCurPagePos);
+        } else {
+            book.setDurChapterPage(curChapter().txtChapter.getCharCountByPageIndex(mCurPagePos));
+        }
+
         callback.onPageChange(mCurChapterPos, getCurPagePos(), resetReadAloud);
         resetReadAloud = true;
     }
@@ -1543,6 +1556,10 @@ public abstract class PageLoader {
             Single.create((SingleOnSubscribe<TxtChapter>) e -> {
                 ChapterProvider chapterProvider = new ChapterProvider(this);
                 TxtChapter txtChapter = chapterProvider.dealLoadPageList(callback.getChapterList().get(mCurChapterPos), mPageView.isPrepare());
+                if (!mIsPageSet && !book.isAudio()) {
+                    mIsPageSet = true;
+                    mCurPagePos = txtChapter.getPageIndexByCharCount(book.getDurChapterPage());
+                }
                 e.onSuccess(txtChapter);
             })
                     .compose(RxUtils::toSimpleSingle)
@@ -1765,7 +1782,7 @@ public abstract class PageLoader {
         return chapterContainers.get(0);
     }
 
-    ChapterContainer curChapter() {
+    public ChapterContainer curChapter() {
         return chapterContainers.get(1);
     }
 
@@ -1775,8 +1792,12 @@ public abstract class PageLoader {
 
     /*****************************************interface*****************************************/
 
-    static class ChapterContainer {
+    public static class ChapterContainer {
         TxtChapter txtChapter;
+
+        public TxtChapter getTxtChapter() {
+            return txtChapter;
+        }
     }
 
     /**

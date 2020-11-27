@@ -1,5 +1,6 @@
 package com.kunfei.bookshelf.widget.page
 
+import androidx.core.util.rangeTo
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
@@ -49,6 +50,30 @@ class TxtChapter internal constructor(val position: Int) {
             }
         }
         return -1
+    }
+
+    fun getPageIndexByCharCount(charCount: Int): Int {
+        var index = 0
+        var count = 0
+
+        for (i in 0 until txtPageList.size) {
+            index = i
+            count += txtPageList[index].content.length
+            if (count > charCount) return index
+        }
+        return index
+    }
+
+    fun getCharCountByPageIndex(pageIndex: Int): Int {
+        var index: Int
+        var count = 0
+
+        for (i in 0 until txtPageList.size) {
+            index = i
+            if (index >= pageIndex) return count
+            count += txtPageList[index].content.length
+        }
+        return count
     }
 
     enum class Status {

@@ -885,7 +885,12 @@ public class ReadBookActivity extends MBaseActivity<ReadBookContract.Presenter> 
                     @Override
                     public void onPageChange(int chapterIndex, int pageIndex, boolean resetReadAloud) {
                         mPresenter.getBookShelf().setDurChapter(chapterIndex);
-                        mPresenter.getBookShelf().setDurChapterPage(pageIndex);
+                        if (mPresenter.getBookShelf().isAudio()) {
+                            mPresenter.getBookShelf().setDurChapterPage(pageIndex);
+                        } else {
+                            mPresenter.getBookShelf().setDurChapterPage(mPageLoader.curChapter().getTxtChapter().getCharCountByPageIndex(pageIndex));
+                        }
+
                         mPresenter.saveProgress();
                         readBottomMenu.getReadProgress().post(
                                 () -> readBottomMenu.getReadProgress().setProgress(pageIndex)
